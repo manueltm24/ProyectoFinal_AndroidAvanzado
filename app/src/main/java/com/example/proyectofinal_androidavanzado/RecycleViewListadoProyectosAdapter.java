@@ -11,10 +11,9 @@ import android.widget.TextView;
 
 import com.example.proyectofinal_androidavanzado.Clases.Proyecto;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.Holder> {
+public class RecycleViewListadoProyectosAdapter extends RecyclerView.Adapter<RecycleViewListadoProyectosAdapter.Holder> {
     private Context context;
 
     public void setListadoProyectos(List<Proyecto> listadoProyectos) {
@@ -24,7 +23,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     private List<Proyecto> listadoProyectos;
     private Listener listener;
 
-    public RecycleViewAdapter(Context context, List<Proyecto> listadoProyectos, Listener listener) {
+    public RecycleViewListadoProyectosAdapter(Context context, List<Proyecto> listadoProyectos, Listener listener) {
         this.listadoProyectos = listadoProyectos;
         this.context = context;
         this.listener = listener;

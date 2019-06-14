@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="2"
-    android:orientation="vertical"
-    tools:context=".Activities.ListadoProyectosActivity">
+    tools:context=".Activities.MainActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/headerlayout"
+        android:layout_height="150dp"
+        android:background="@drawable/primarydegrag">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/folderimage"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_folderopen"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/folderimage"
+            android:fontFamily="@font/seidoround_bold"
+            android:text="Proyectos"/>
+
+    </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
+        android:layout_below="@+id/headerlayout"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="match_parent"/>
-</LinearLayout>
+
+</RelativeLayout>

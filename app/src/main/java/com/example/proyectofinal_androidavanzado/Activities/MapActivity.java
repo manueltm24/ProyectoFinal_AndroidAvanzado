@@ -27,25 +27,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private GoogleMap mMap;
     String latitud="";
     String longitud="";
-
-    private FirebaseDatabase mFirebaseInstance;
-    private DatabaseReference mFirebaseDatabase_Proyecto;
-    private DatabaseReference mFirebaseDatabase_Usuario;
+    private FirebaseDatabase firebaseDatebaseInstacia;
+    private DatabaseReference proyectoSeleccionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-
-        Intent intent = getIntent();
-        String idProyecto = intent.getStringExtra("idProyecto");
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase_Proyecto = mFirebaseInstance.getReference("proyectos");
-        mFirebaseDatabase_Proyecto = mFirebaseDatabase_Proyecto.child(idProyecto);
-
-
+        initializeUI();
         readData();
-
     }
 
     @Override
@@ -82,6 +72,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 // ...
             }
         };
-        mFirebaseDatabase_Proyecto.addValueEventListener(postListener);
+        proyectoSeleccionado.addValueEventListener(postListener);
+    }
+
+    private void initializeUI() {
+        //FIREBASE
+        firebaseDatebaseInstacia = FirebaseDatabase.getInstance();
+
+        Intent intent = getIntent();
+        String idProyecto = intent.getStringExtra("idProyecto");
+        proyectoSeleccionado = firebaseDatebaseInstacia.getReference("proyectos").child(idProyecto);
+
+
     }
 }

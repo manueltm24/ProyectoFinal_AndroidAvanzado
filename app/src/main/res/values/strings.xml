@@ -1,9 +1,6 @@
 <resources>
-    <string name="app_name">ProyectoFinal_AndroidAvanzado</string>
+    <string name="app_name">Find you job</string>
 
-    <!--<string name="app_name">Firebase Authentication</string>-->
-
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCQpdEsMjtIjLiwyAHP0KZttIlUhBphoXo</string>
 
     <string name="label_google_sign_in">Firebase + Google Sign In</string>
     <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>

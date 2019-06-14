@@ -1,115 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    tools:context=".Activities.CrearProyectoActivity">
-
-<LinearLayout
+    tools:context=".Activities.MainActivity">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:id="@+id/headerlayout"
+        android:layout_height="150dp"
+        android:background="@drawable/primarydegrag">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/folderimage"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_paper"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre del proyecto"/>
-        <EditText
-            android:id="@+id/editText_nombre"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:text=" "
-            android:inputType="text" />
-
-    </LinearLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/folderimage"
+            android:fontFamily="@font/seidoround_bold"
+            android:text="Nuevo proyecto "/>
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
+        android:layout_below="@+id/headerlayout"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Remoto"/>
-        <CheckBox
-            android:id="@+id/editText_remoto"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"/>
+            android:layout_marginLeft="15dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/seidoround_bold"
+                android:text="Nombre del proyecto"/>
+            <EditText
+                android:id="@+id/editText_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/seidoround_bold"
+                android:text="Descripcion "/>
+            <EditText
+                android:id="@+id/editText_descripcion"
+                android:inputType="text|textMultiLine"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:ems="50" />
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/seidoround_bold"
+                android:text="Remoto "/>
+            <CheckBox
+                android:id="@+id/editText_remoto"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/seidoround_bold"
+                android:text="Pago/hr  "/>
+            <EditText
+                android:id="@+id/editText_pagoHr"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_marginLeft="15dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/seidoround_bold"
+                android:text="Latitud "/>
+            <EditText
+                android:id="@+id/editText_latitud"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/seidoround_bold"
+                android:text="Longitud "/>
+            <EditText
+                android:id="@+id/editText_logitud"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:background="@color/yello"
+            android:text="Buscar ubicacion actual"
+            android:id="@+id/btn_buscarUbicacionActual"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar proyecto"
+            android:background="@color/green"
+            android:id="@+id/btn_guardarProyecto"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pago/hr  "/>
-        <EditText
-            android:id="@+id/editText_pagoHr"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:text=" "
-            android:inputType="numberDecimal" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Descripcion: "/>
-        <EditText
-            android:id="@+id/editText_descripcion"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:text=" "
-            android:inputType="text" />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Latitud"/>
-        <EditText
-            android:id="@+id/editText_latitud"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pago/hr  "/>
-        <EditText
-            android:id="@+id/editText_logitud"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
-
-    </LinearLayout>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Buscar ubicacion actual"
-        android:id="@+id/btn_buscarUbicacionActual"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Guardar"
-        android:id="@+id/btn_guardarProyecto"/>
+</RelativeLayout>
 
 
-</LinearLayout>

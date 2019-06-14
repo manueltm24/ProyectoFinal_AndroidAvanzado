@@ -52,65 +52,58 @@ public class RegistrarUsuarioActivity extends AppCompatActivity{
     private ProgressBar progressBar;
     private Uri filePath;
 
-    FirebaseStorage storage;
-    StorageReference storageReference;
-
-
-    private DatabaseReference mFirebaseDatabase;
-    private FirebaseDatabase mFirebaseInstance;
+    FirebaseStorage firebaseStorageInstacia;
+    private FirebaseAuth firebaseAuthInstacia;
+    private FirebaseDatabase firebaseDatebaseInstacia;
 
     private static final String TAG = "RegistrarUsuarioActivity";
     private final int PICK_IMAGE_REQUEST = 71;
 
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrarusuario);
-
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("usuarios");
-
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-
-        mAuth = FirebaseAuth.getInstance();
         initializeUI();
 
         btnChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseImage();
+                elegirImangenLocal();
             }
         });
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createUser();
+                crearUsuario();
             }
         });
     }
     private void initializeUI() {
-        email = findViewById(R.id.editText_email);
+        email = (EditText)findViewById(R.id.editText_email);
         password = findViewById(R.id.editText_password);
         btnChooseImage = (Button) findViewById(R.id.btn_chooseImage);
         imageView = (ImageView) findViewById(R.id.imgView);
+        loginBtn = (Button)findViewById(R.id.btn_guardarUsuario);
+        progressBar = (ProgressBar)findViewById(R.id.p_progressBar);
 
 
-        loginBtn = findViewById(R.id.btn_guardarUsuario);
-        progressBar = findViewById(R.id.p_progressBar);
+        //FIREBASE
+        firebaseDatebaseInstacia = FirebaseDatabase.getInstance();
+        firebaseAuthInstacia = FirebaseAuth.getInstance();
+        firebaseStorageInstacia = FirebaseStorage.getInstance();
+        
     }
 
-    private void createUser(){
+    private void crearUsuario(){
         final String idImagen = uploadImage();
-        mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+        firebaseAuthInstacia.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Usuario usuario = new Usuario(mAuth.getCurrentUser().getUid(),email.getText().toString(),password.getText().toString(),idImagen );
-                            mFirebaseDatabase.child(usuario.getId()).setValue(usuario);
+                            Usuario usuario = new Usuario(firebaseAuthInstacia.getCurrentUser().getUid(),email.getText().toString(),password.getText().toString(),idImagen );
+                            firebaseDatebaseInstacia.getReference("usuarios").child(usuario.getId()).setValue(usuario);
                             Intent intent = new Intent(RegistrarUsuarioActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }
@@ -136,7 +129,7 @@ public class RegistrarUsuarioActivity extends AppCompatActivity{
         }
     }
 
-    private void chooseImage() {
+    private void elegirImangenLocal() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -152,9 +145,9 @@ public class RegistrarUsuarioActivity extends AppCompatActivity{
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
-            idImagen= UUID.randomUUID().toString();
+            idImagen= UUID.randomUUID().toString(); //NOMBRE CON EL QUE LA IMAGEN SE SUBIRA
 
-            StorageReference ref = storageReference.child("images/"+ idImagen);
+            StorageReference ref = firebaseStorageInstacia.getReference().child("images/"+ idImagen);
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -181,6 +174,7 @@ public class RegistrarUsuarioActivity extends AppCompatActivity{
         }
         return idImagen;
     }
+    
 
 
 }

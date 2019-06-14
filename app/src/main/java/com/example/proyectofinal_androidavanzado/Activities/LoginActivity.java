@@ -19,20 +19,17 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText emailTV, passwordTV;
+    private EditText textView_email, textView_password;
     private Button loginBtn;
     private Button registrarnBtn;
     private ProgressBar progressBar;
-
-    private FirebaseAuth mAuth;
+    private FirebaseAuth firebaseAuthInstacia;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        mAuth = FirebaseAuth.getInstance();
-
         initializeUI();
+
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,8 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         registrarnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegistrarUsuarioActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(LoginActivity.this, RegistrarUsuarioActivity.class));
             }
         });
     }
@@ -53,8 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         String email, password;
-        email = emailTV.getText().toString();
-        password = passwordTV.getText().toString();
+        email = textView_email.getText().toString();
+        password = textView_password.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(), "Please enter email...", Toast.LENGTH_LONG).show();
@@ -65,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        mAuth.signInWithEmailAndPassword(email, password)
+        firebaseAuthInstacia.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -85,11 +81,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initializeUI() {
-        emailTV = findViewById(R.id.editText_email);
-        passwordTV = findViewById(R.id.editText_password);
-
+        textView_email = findViewById(R.id.editText_email);
+        textView_password = findViewById(R.id.editText_password);
         loginBtn = findViewById(R.id.btn_login);
         registrarnBtn = findViewById(R.id.btn_registrar);
         progressBar = findViewById(R.id.p_progressBar);
+        
+        firebaseAuthInstacia = FirebaseAuth.getInstance(); //BUSCO LA INSTANCIA DE FIREBASE AUTHENTICATION
+
     }
 }

@@ -12,6 +12,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:fontFamily="@font/seidoround_bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
         android:text="Datos de la cuenta"/>
     <EditText
         android:id="@+id/editText_email"
@@ -34,13 +38,17 @@
         android:layout_height="150dp" />
     <Button
         android:id="@+id/btn_chooseImage"
+        android:layout_marginTop="20dp
+"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/yello"
         android:text="Selecciona una imagen" />
 
     <Button
         android:id="@+id/btn_guardarUsuario"
         android:layout_width="match_parent"
+        android:background="@color/green"
         android:layout_height="wrap_content"
         android:text="Registrar" />
 

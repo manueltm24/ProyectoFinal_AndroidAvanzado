@@ -43,31 +43,39 @@ public class CrearProyectoActivity extends AppCompatActivity implements Location
     private Button btnGuardar;
     private Button btnUbicacionActual;
 
-    private DatabaseReference mFirebaseDatabase;
-    private FirebaseDatabase mFirebaseInstance;
-    private FirebaseAuth mAuth;
+    private DatabaseReference proyectos;
+    private FirebaseDatabase firebaseDatebaseInstacia;
+    private FirebaseAuth firebaseAuthInstacia;
 
     private static final String TAG = "CrearProyectoActivity";
 
-    //para identificar el request de los permisos
+    //Para identificar el request de los permisos
     private static final int REQUEST_LOCATION_PERMISSION = 1000;
-
-    //manejador de todo lo que tiene que ver con location
+    //Manejador de lo que tiene que ver con location
     private LocationManager locationManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crearproyecto);
-        //obtener el location manager desde el sistema
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        if (!hasPermission()) this.requestForPermission();
+        initializeUI();
 
+        btnGuardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                crearProyecto();
+                startActivity(new Intent(CrearProyectoActivity.this, ListadoProyectosActivity.class));
+            }
+        });
+        btnUbicacionActual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLastKnowLocation(null);
+            }
+        });
 
-
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("proyectos");
-
-
+    }
+    private void initializeUI() {
         nombre = (EditText)findViewById(R.id.editText_nombre);
         descripcion = (EditText)findViewById(R.id.editText_descripcion);
         pagoHr = (EditText)findViewById(R.id.editText_pagoHr);
@@ -77,43 +85,31 @@ public class CrearProyectoActivity extends AppCompatActivity implements Location
         btnGuardar=(Button)findViewById(R.id.btn_guardarProyecto);
         btnUbicacionActual=(Button)findViewById(R.id.btn_buscarUbicacionActual);
 
-        mAuth = FirebaseAuth.getInstance();
+        //FIREBASE
+        firebaseDatebaseInstacia = FirebaseDatabase.getInstance();
+        firebaseAuthInstacia = FirebaseAuth.getInstance();
+        proyectos = firebaseDatebaseInstacia.getReference("proyectos");
 
-
-        btnGuardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Proyecto proyecto = new Proyecto(
-                        mFirebaseDatabase.push().getKey(),
-                        mAuth.getCurrentUser().getUid(),
-                        nombre.getText().toString(),
-                        descripcion.getText().toString(),
-                        new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()),
-                        latitud.getText().toString(),
-                        longitud.getText().toString(),
-                        remoto.isChecked() ?true:false,
-                        Double.parseDouble(pagoHr.getText().toString())
-                );
-                mFirebaseDatabase.child(proyecto.getId()).setValue(proyecto);
-                startActivity(new Intent(CrearProyectoActivity.this, ListadoProyectosActivity.class));
-
-            }
-        });
-
-        btnUbicacionActual.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                showLastKnowLocation(null);
-            }
-        });
-
-
-
-
-
+        //Obtener el location manager desde el sistema
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        if (!hasPermission())
+            this.requestForPermission();
     }
 
+    private void crearProyecto(){
+        Proyecto proyecto = new Proyecto(
+                proyectos.push().getKey(),
+                firebaseAuthInstacia.getCurrentUser().getUid(),
+                nombre.getText().toString(),
+                descripcion.getText().toString(),
+                new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()),
+                latitud.getText().toString(),
+                longitud.getText().toString(),
+                remoto.isChecked() ?true:false,
+                Double.parseDouble(pagoHr.getText().toString())
+        );
+        proyectos.child(proyecto.getId()).setValue(proyecto);
+    }
 
     //solicitar permisos para usar la ubicacion
     private void requestForPermission() {
@@ -171,8 +167,8 @@ public class CrearProyectoActivity extends AppCompatActivity implements Location
         showLastKnowLocation(null);
     }
 
-    //BEGIN METHODS LISTENER LOCATION
-    //================================================================================
+
+    //METODOS DEL LOCATIONLISTENER
     @Override
     public void onLocationChanged(Location location) {
         showLocation(location);
@@ -194,7 +190,4 @@ public class CrearProyectoActivity extends AppCompatActivity implements Location
         Log.wtf(TAG, provider);
 
     }
-    //END METHODS LISTENER LOCATION
-    //================================================================================
-
 }
